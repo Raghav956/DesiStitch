@@ -10,6 +10,8 @@ from app.models.category import Category
 from app.routes import auth
 from app.routes import products
 from app.routes import categories
+from app.models.collection import Collection
+from app.routes import collections
 
 Base.metadata.create_all(bind=engine)
 
@@ -35,6 +37,11 @@ app.include_router(
     categories.router,
     prefix="/categories",
     tags=["Categories"]
+)
+app.include_router(
+    collections.router,
+    prefix="/collections",
+    tags=["Collections"]
 )
 
 @app.get("/")

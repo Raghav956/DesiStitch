@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import api from '../services/api'
 
-import ProductCard from '../components/ProductCard'
+import ProductCard from '../components/product/ProductCard'
 
 export default function CategoryPage() {
 

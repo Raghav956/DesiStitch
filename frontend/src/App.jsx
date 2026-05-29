@@ -1,28 +1,67 @@
 import { Routes, Route } from 'react-router-dom'
 
+import Layout from './components/layout/Layout'
+
 import Home from './pages/Home'
 import Cart from './pages/Cart'
 import Shop from './pages/Shop'
 import ProductDetails from './pages/ProductDetails'
 import Admin from './pages/Admin'
 import CategoryPage from './pages/CategoryPage'
+import Collections from './pages/Collections'
+import CollectionDetails from './pages/CollectionDetails'
+
 export default function App() {
 
   return (
 
-    <Routes>
+    <Layout>
 
-      <Route path="/" element={<Home />} />
+      <Routes>
 
-      <Route path="/shop" element={<Shop />} />
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/category/:id" element={<CategoryPage />} />
+        <Route
+          path="/shop"
+          element={<Shop />}
+        />
 
-      <Route path="/product/:id" element={<ProductDetails />} />
-      <Route path="/admin" element={<Admin />} />
+        <Route
+          path="/cart"
+          element={<Cart />}
+        />
 
-    </Routes>
+        <Route
+          path="/category/:id"
+          element={<CategoryPage />}
+        />
+
+        <Route
+          path="/collections"
+          element={<Collections />}
+        />
+
+        <Route
+          path="/collections/:slug"
+          element={<CollectionDetails />}
+        />
+
+        <Route
+          path="/product/:id"
+          element={<ProductDetails />}
+        />
+
+        <Route
+          path="/admin"
+          element={<Admin />}
+        />
+
+      </Routes>
+
+    </Layout>
 
   )
 }

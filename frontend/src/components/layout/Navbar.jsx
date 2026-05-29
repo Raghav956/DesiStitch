@@ -1,0 +1,218 @@
+import { useState } from 'react'
+
+import { Link } from 'react-router-dom'
+
+import {
+  Search,
+  ShoppingBag,
+  Heart,
+  User,
+  Menu
+} from 'lucide-react'
+
+import MegaMenu from './MegaMenu'
+
+import { navigation } from '../../data/navigation'
+
+import useCartStore from '../../store/cartStore'
+
+export default function Navbar() {
+
+  const [activeMenu, setActiveMenu] = useState(null)
+
+  const { cart } = useCartStore()
+
+  return (
+
+    <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 relative">
+
+      {/* DESKTOP */}
+
+      <div className="hidden lg:flex items-center justify-between px-8 xl:px-10 py-5 relative">
+
+        {/* LEFT */}
+
+        <div className="flex items-center gap-6 xl:gap-10">
+
+          {navigation.map((item) => (
+
+            <div
+              key={item.title}
+              onMouseEnter={() => setActiveMenu(item)}
+            >
+
+              <button className="text-[15px] font-medium hover:text-mustard transition">
+
+                {item.title}
+
+              </button>
+
+            </div>
+
+          ))}
+
+          <Link
+            to="/collections"
+            className="text-[15px] font-medium hover:text-mustard transition"
+          >
+
+            Collections
+
+          </Link>
+
+        </div>
+
+        {/* LOGO */}
+
+        <Link
+          to="/"
+          className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap"
+        >
+
+          <div className="text-center leading-none">
+
+            <h1 className="text-3xl font-black tracking-tight">
+
+              DESI STITCH
+
+            </h1>
+
+            <p className="text-[11px] tracking-[4px] text-gray-500 mt-1">
+
+              BY SHIVIKA
+
+            </p>
+
+          </div>
+
+        </Link>
+
+        {/* RIGHT */}
+
+        <div className="flex items-center gap-5">
+
+          <div className="hidden xl:flex items-center border border-gray-300 rounded-full px-4 py-2 w-[220px]">
+
+            <input
+              placeholder="Search..."
+              className="outline-none flex-1 text-sm bg-transparent"
+            />
+
+            <Search
+              size={18}
+              strokeWidth={1.7}
+            />
+
+          </div>
+
+          <button>
+
+            <User
+              size={22}
+              strokeWidth={1.7}
+            />
+
+          </button>
+
+          <button>
+
+            <Heart
+              size={22}
+              strokeWidth={1.7}
+            />
+
+          </button>
+
+          <Link
+            to="/cart"
+            className="relative"
+          >
+
+            <ShoppingBag
+              size={22}
+              strokeWidth={1.7}
+            />
+
+            <div className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+
+              {cart.length}
+
+            </div>
+
+          </Link>
+
+        </div>
+
+      </div>
+
+      {/* MEGA MENU */}
+
+      {activeMenu && (
+
+        <div
+
+          onMouseEnter={() => setActiveMenu(activeMenu)}
+
+          onMouseLeave={() => setActiveMenu(null)}
+
+          className="absolute left-0 top-full w-full z-50"
+
+        >
+
+          <MegaMenu menu={activeMenu} />
+
+        </div>
+
+      )}
+
+      {/* MOBILE */}
+
+      <div className="lg:hidden flex items-center justify-between px-4 py-4">
+
+        <button>
+
+          <Menu size={26} />
+
+        </button>
+
+        <Link to="/">
+
+          <div className="text-center leading-none">
+
+            <h1 className="text-xl font-black tracking-tight">
+
+              DESI STITCH
+
+            </h1>
+
+            <p className="text-[9px] tracking-[3px] text-gray-500 mt-1">
+
+              BY SHIVIKA
+
+            </p>
+
+          </div>
+
+        </Link>
+
+        <Link
+          to="/cart"
+          className="relative"
+        >
+
+          <ShoppingBag size={24} />
+
+          <div className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+
+            {cart.length}
+
+          </div>
+
+        </Link>
+
+      </div>
+
+    </nav>
+
+  )
+}

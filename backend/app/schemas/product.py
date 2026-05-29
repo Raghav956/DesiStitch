@@ -7,3 +7,4 @@ class ProductCreate(BaseModel):
     image_url: str
     stock: int
     category_id: int
+    collection_id: int

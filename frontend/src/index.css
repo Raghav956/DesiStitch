@@ -1,10 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
+* {
+
   margin: 0;
+
   padding: 0;
-  background: #FAF8F3;
-  font-family: Inter, sans-serif;
+
+  box-sizing: border-box;
+}
+
+html {
+
+  scroll-behavior: smooth;
+}
+
+body {
+
+  font-family: 'Inter', sans-serif;
+
+  background: #faf7f2;
+
+  color: #111;
+
+  overflow-x: hidden;
+}
+
+img {
+
+  width: 100%;
+
+  display: block;
+}
+
+button {
+
+  cursor: pointer;
+
+  background: none;
+
+  border: none;
+}
+
+input,
+select,
+textarea {
+
+  font-family: inherit;
+}
+
+a {
+
+  text-decoration: none;
+
+  color: inherit;
+}
+
+::-webkit-scrollbar {
+
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+
+  background: #d4b06a;
+
+  border-radius: 20px;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import ProductCard from '../components/ProductCard'
+import ProductCard from '../components/product/ProductCard'
 
 import api from '../services/api'
 

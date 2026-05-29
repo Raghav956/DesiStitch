@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ProductCard from './ProductCard'
+import ProductCard from "./product/ProductCard";
 import api from '../services/api'
 
 export default function ProductGrid() {
