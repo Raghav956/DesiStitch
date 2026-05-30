@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import { Link } from 'react-router-dom'
-
 import api from '../services/api'
+
+import CollectionsHero from '../components/collection/CollectionHero'
+
+import CollectionCard from '../components/collection/CollectionCard'
 
 export default function Collections() {
 
@@ -16,69 +18,72 @@ export default function Collections() {
 
   const fetchCollections = async () => {
 
-    const response = await api.get('/collections')
+    try {
 
-    setCollections(response.data)
+      const response = await api.get('/collections')
+
+      setCollections(response.data)
+
+    } catch (error) {
+
+      console.log(error)
+    }
   }
 
   return (
 
-    <div className="min-h-screen bg-[#faf7f2]">
+    <div>
 
-      <section className="px-6 py-16 text-center">
+      <CollectionsHero />
 
-        <p className="uppercase tracking-[5px] text-sm text-gray-500">
+      {/* INTRO */}
 
-          Desi Stitch
+      <section className="py-20">
 
-        </p>
+        <div className="max-w-[1500px] mx-auto px-6 text-center">
 
-        <h1 className="text-5xl md:text-7xl font-black mt-5">
+          <p className="uppercase tracking-[5px] text-sm text-gray-500">
 
-          Collections
+            Curated Fashion
 
-        </h1>
+          </p>
+
+          <h2 className="text-4xl md:text-6xl font-black mt-5">
+
+            Discover Every Collection
+
+          </h2>
+
+          <p className="max-w-2xl mx-auto mt-6 text-gray-600 leading-relaxed">
+
+            Each collection tells a story through handcrafted fabrics, timeless silhouettes, and thoughtful design.
+
+          </p>
+
+        </div>
 
       </section>
 
-      <section className="grid md:grid-cols-2 gap-6 px-6 pb-20">
+      {/* COLLECTION GRID */}
 
-        {collections.map((collection) => (
+      <section className="pb-24">
 
-          <Link
-            key={collection.id}
-            to={`/collections/${collection.slug}`}
-            className="group relative overflow-hidden rounded-[40px]"
-          >
+        <div className="max-w-[1500px] mx-auto px-6">
 
-            <img
-              src={collection.banner}
-              className="w-full h-[650px] object-cover group-hover:scale-105 transition duration-700"
-            />
+          <div className="grid md:grid-cols-2 gap-10">
 
-            <div className="absolute inset-0 bg-black/20 flex items-end p-8">
+            {collections.map((collection) => (
 
-              <div>
+              <CollectionCard
+                key={collection.id}
+                collection={collection}
+              />
 
-                <h2 className="text-white text-4xl font-bold">
+            ))}
 
-                  {collection.title}
+          </div>
 
-                </h2>
-
-                <p className="text-white/90 mt-4 max-w-md">
-
-                  {collection.subtitle}
-
-                </p>
-
-              </div>
-
-            </div>
-
-          </Link>
-
-        ))}
+        </div>
 
       </section>
 

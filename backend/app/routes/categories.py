@@ -42,3 +42,22 @@ def get_category_products(
     return db.query(Product).filter(
         Product.category_id == category_id
     ).all()
+    
+    
+@router.get("/{id}")
+def get_category(
+    id: int,
+    db: Session = Depends(get_db)
+):
+
+    category = db.query(Category).filter(
+        Category.id == id
+    ).first()
+
+    if not category:
+        raise HTTPException(
+            status_code=404,
+            detail="Category not found"
+        )
+
+    return category

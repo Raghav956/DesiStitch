@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.database import SessionLocal
 from app.models.product import Product
 from app.schemas.product import ProductCreate
-
+from fastapi import HTTPException
 router = APIRouter()
 
 
@@ -76,3 +76,30 @@ def get_product(
     ).first()
 
     return product
+
+
+
+@router.delete("/{id}")
+def delete_product(
+    id: int,
+    db: Session = Depends(get_db)
+):
+
+    product = db.query(Product).filter(
+        Product.id == id
+    ).first()
+
+    if not product:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Product not found"
+        )
+
+    db.delete(product)
+
+    db.commit()
+
+    return {
+        "message": "Product deleted"
+    }

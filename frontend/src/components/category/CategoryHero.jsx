@@ -1,13 +1,18 @@
-export default function CollectionHero({ collection }) {
+export default function CategoryHero({
 
-  if (!collection) return null
+  category
+
+}) {
+
+  if (!category) return null
 
   return (
-    <section className="relative h-[60vh] overflow-hidden">
+
+    <section className="relative h-[45vh] overflow-hidden">
 
       <img
-        src={collection.banner}
-        alt={collection.title}
+        src={category.image_url}
+        alt={category.name}
         className="absolute inset-0 w-full h-full object-cover"
       />
 
@@ -18,21 +23,22 @@ export default function CollectionHero({ collection }) {
         <div>
 
           <p className="uppercase tracking-[5px] text-white/80 text-sm">
-            Desi Stitch Collection
+
+            Desi Stitch
+
           </p>
 
           <h1 className="text-5xl md:text-7xl font-black text-white mt-4">
-            {collection.title}
-          </h1>
 
-          <p className="text-white/90 mt-6 max-w-2xl">
-            {collection.subtitle}
-          </p>
+            {category.name}
+
+          </h1>
 
         </div>
 
       </div>
 
     </section>
+
   )
 }

@@ -1,94 +1,233 @@
+import { Link } from 'react-router-dom'
+
+import {
+  Minus,
+  Plus,
+  Trash2
+} from 'lucide-react'
+
 import useCartStore from '../store/cartStore'
 
 export default function Cart() {
 
-  const { cart, removeFromCart } = useCartStore()
+  const {
 
-  const total = cart.reduce(
+    cart,
+
+    removeFromCart,
+
+    increaseQuantity,
+
+    decreaseQuantity
+
+  } = useCartStore()
+
+  const subtotal = cart.reduce(
 
     (acc, item) =>
 
       acc + item.price * item.quantity,
 
     0
+
   )
 
-  return (
+  const shipping = subtotal > 1999
+    ? 0
+    : 99
 
-    <div className="min-h-screen bg-cream pb-40">
+  const total = subtotal + shipping
 
-      <div className="p-4">
+  if (cart.length === 0) {
 
-        <h1 className="text-4xl font-bold">
-          Your Cart
+    return (
+
+      <div className="min-h-[70vh] flex flex-col items-center justify-center">
+
+        <h1 className="text-4xl font-black">
+
+          Your Cart Is Empty
+
         </h1>
+
+        <p className="text-gray-500 mt-4">
+
+          Discover handcrafted pieces you'll love.
+
+        </p>
+
+        <Link
+          to="/shop"
+          className="mt-8 bg-black text-white px-8 py-4 rounded-full"
+        >
+
+          Continue Shopping
+
+        </Link>
 
       </div>
 
-      <div className="space-y-4 px-4">
+    )
+  }
 
-        {cart.map((item) => (
+  return (
 
-          <div
-            key={item.id}
-            className="bg-white rounded-3xl p-4 flex gap-4"
-          >
+    <div className="max-w-[1500px] mx-auto px-6 py-12">
 
-            <img
-              src={item.image_url}
-              className="w-28 h-28 object-cover rounded-2xl"
-            />
+      <h1 className="text-5xl font-black mb-12">
 
-            <div className="flex-1">
+        Shopping Bag
 
-              <h2 className="font-semibold text-lg">
-                {item.title}
-              </h2>
+      </h1>
 
-              <p className="text-gray-500 mt-1">
-                ₹{item.price}
-              </p>
+      <div className="grid lg:grid-cols-[2fr_1fr] gap-12">
 
-              <p className="mt-2 text-sm">
-                Quantity: {item.quantity}
-              </p>
+        {/* ITEMS */}
+
+        <div className="space-y-6">
+
+          {cart.map((item) => (
+
+            <div
+
+              key={item.id}
+
+              className="bg-white rounded-[30px] p-5 flex gap-5"
+
+            >
+
+              <img
+                src={item.image_url}
+                alt={item.title}
+                className="w-32 h-40 object-cover rounded-2xl"
+              />
+
+              <div className="flex-1">
+
+                <h2 className="text-xl font-semibold">
+
+                  {item.title}
+
+                </h2>
+
+                <p className="text-gray-500 mt-2">
+
+                  ₹{item.price}
+
+                </p>
+
+                <div className="flex items-center gap-3 mt-5">
+
+                  <button
+                    onClick={() =>
+                      decreaseQuantity(item.id)
+                    }
+                    className="w-10 h-10 rounded-full border flex items-center justify-center"
+                  >
+
+                    <Minus size={16} />
+
+                  </button>
+
+                  <span className="font-semibold">
+
+                    {item.quantity}
+
+                  </span>
+
+                  <button
+                    onClick={() =>
+                      increaseQuantity(item.id)
+                    }
+                    className="w-10 h-10 rounded-full border flex items-center justify-center"
+                  >
+
+                    <Plus size={16} />
+
+                  </button>
+
+                </div>
+
+              </div>
 
               <button
                 onClick={() =>
                   removeFromCart(item.id)
                 }
-                className="mt-3 text-red-500 text-sm"
               >
-                Remove
+
+                <Trash2 size={20} />
+
               </button>
 
             </div>
 
-          </div>
+          ))}
 
-        ))}
+        </div>
 
-      </div>
+        {/* SUMMARY */}
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t p-4">
+        <div>
 
-        <div className="flex items-center justify-between mb-4">
+          <div className="bg-white rounded-[30px] p-8 sticky top-32">
 
-          <div>
+            <h2 className="text-2xl font-bold mb-8">
 
-            <p className="text-sm text-gray-500">
-              Total
-            </p>
+              Order Summary
 
-            <h2 className="text-2xl font-bold">
-              ₹{total}
             </h2>
 
-          </div>
+            <div className="space-y-5">
 
-          <button className="bg-black text-white px-8 py-4 rounded-2xl">
-            Checkout
-          </button>
+              <div className="flex justify-between">
+
+                <span>Subtotal</span>
+
+                <span>
+
+                  ₹{subtotal}
+
+                </span>
+
+              </div>
+
+              <div className="flex justify-between">
+
+                <span>Shipping</span>
+
+                <span>
+
+                  ₹{shipping}
+
+                </span>
+
+              </div>
+
+              <div className="border-t pt-5 flex justify-between text-xl font-bold">
+
+                <span>Total</span>
+
+                <span>
+
+                  ₹{total}
+
+                </span>
+
+              </div>
+
+            </div>
+
+            <Link
+  to="/checkout"
+  className="block w-full mt-8 bg-black text-white py-4 rounded-full text-lg font-semibold text-center"
+>
+
+  Proceed To Checkout
+
+</Link>
+
+          </div>
 
         </div>
 

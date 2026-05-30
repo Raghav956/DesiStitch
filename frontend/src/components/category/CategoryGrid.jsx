@@ -1,6 +1,6 @@
 import ProductCard from '../product/ProductCard'
 
-export default function CollectionGrid({
+export default function CategoryGrid({
 
   products
 

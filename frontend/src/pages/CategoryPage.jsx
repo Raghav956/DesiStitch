@@ -4,53 +4,88 @@ import { useParams } from 'react-router-dom'
 
 import api from '../services/api'
 
-import ProductCard from '../components/product/ProductCard'
+import CategoryHero from '../components/category/CategoryHero'
+
+import CategoryToolbar from '../components/category/CategoryToolbar'
+
+import CategoryGrid from '../components/category/CategoryGrid'
 
 export default function CategoryPage() {
 
   const { id } = useParams()
 
+  const [category, setCategory] = useState(null)
+
   const [products, setProducts] = useState([])
 
   useEffect(() => {
 
+    fetchCategory()
+
     fetchProducts()
 
-  }, [])
+  }, [id])
+
+  const fetchCategory = async () => {
+
+    try {
+
+      const response = await api.get(
+        `/categories/${id}`
+      )
+
+      setCategory(response.data)
+
+    } catch (error) {
+
+      console.log(error)
+    }
+  }
 
   const fetchProducts = async () => {
 
-    const response = await api.get(
-      `/categories/${id}/products`
-    )
+    try {
 
-    setProducts(response.data)
+      const response = await api.get(
+        `/categories/${id}/products`
+      )
+
+      setProducts(response.data)
+
+    } catch (error) {
+
+      console.log(error)
+    }
+  }
+
+  if (!category) {
+
+    return (
+
+      <div className="py-40 text-center">
+
+        Loading...
+
+      </div>
+
+    )
   }
 
   return (
 
-    <div className="min-h-screen bg-cream">
+    <div>
 
-      <div className="px-4 pt-6">
+      <CategoryHero
+        category={category}
+      />
 
-        <h1 className="text-4xl font-bold">
-          Collection
-        </h1>
+      <CategoryToolbar
+        count={products.length}
+      />
 
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 p-4">
-
-        {products.map((product) => (
-
-          <ProductCard
-            key={product.id}
-            product={product}
-          />
-
-        ))}
-
-      </div>
+      <CategoryGrid
+        products={products}
+      />
 
     </div>
 

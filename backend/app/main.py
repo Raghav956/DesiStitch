@@ -12,7 +12,7 @@ from app.routes import products
 from app.routes import categories
 from app.models.collection import Collection
 from app.routes import collections
-
+from app.routes import orders
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -43,6 +43,12 @@ app.include_router(
     prefix="/collections",
     tags=["Collections"]
 )
+app.include_router(
+    orders.router,
+    prefix="/orders",
+    tags=["Orders"]
+)
+
 
 @app.get("/")
 def home():

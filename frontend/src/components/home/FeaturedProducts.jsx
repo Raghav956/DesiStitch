@@ -66,9 +66,28 @@ export default function FeaturedProducts() {
 
       <div className="max-w-site mx-auto px-6">
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
 
-          {products.slice(0, 8).map((product) => (
+          {products.length === 0 ? (
+
+  <div className="col-span-full text-center py-20">
+
+    <h3 className="text-2xl font-bold">
+
+      No Products Found
+
+    </h3>
+
+    <p className="text-gray-500 mt-3">
+
+      New arrivals coming soon.
+
+    </p>
+
+  </div>
+
+) : 
+  products.slice(0, 8).map((product) => (
 
             <ProductCard
               key={product.id}

@@ -4,7 +4,9 @@ import { useParams } from 'react-router-dom'
 
 import api from '../services/api'
 
-import useCartStore from '../store/cartStore'
+import ProductGallery from '../components/product/ProductGallery'
+
+import ProductInfo from '../components/product/ProductInfo'
 
 export default function ProductDetails() {
 
@@ -12,63 +14,54 @@ export default function ProductDetails() {
 
   const [product, setProduct] = useState(null)
 
-  const { addToCart } = useCartStore()
-
   useEffect(() => {
 
     fetchProduct()
 
-  }, [])
+  }, [id])
 
   const fetchProduct = async () => {
 
-    const response = await api.get(`/products/${id}`)
+    try {
 
-    setProduct(response.data)
+      const response = await api.get(
+        `/products/${id}`
+      )
+
+      setProduct(response.data)
+
+    } catch (error) {
+
+      console.log(error)
+    }
   }
 
   if (!product) {
 
     return (
-      <div className="p-10">
+
+      <div className="py-40 text-center">
+
         Loading...
+
       </div>
+
     )
   }
 
   return (
 
-    <div className="min-h-screen bg-cream">
+    <div className="max-w-[1500px] mx-auto px-6 py-16">
 
-      <div className="h-[60vh]">
+      <div className="grid lg:grid-cols-2 gap-16">
 
-        <img
-          src={product.image_url}
-          className="w-full h-full object-cover"
+        <ProductGallery
+          product={product}
         />
 
-      </div>
-
-      <div className="bg-white rounded-t-[40px] -mt-10 relative z-10 p-6">
-
-        <h1 className="text-3xl font-bold">
-          {product.title}
-        </h1>
-
-        <p className="text-gray-500 mt-4 leading-relaxed">
-          {product.description}
-        </p>
-
-        <p className="text-3xl font-bold mt-6">
-          ₹{product.price}
-        </p>
-
-        <button
-          onClick={() => addToCart(product)}
-          className="w-full mt-8 bg-black text-white py-4 rounded-2xl"
-        >
-          Add To Cart
-        </button>
+        <ProductInfo
+          product={product}
+        />
 
       </div>
 
