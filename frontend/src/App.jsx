@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 
 import Layout from './components/layout/Layout'
-
+import ScrollToTop from "./components/ScrollToTop";
 import Home from './pages/Home'
 import Cart from './pages/Cart'
 import Shop from './pages/Shop'
@@ -35,9 +35,10 @@ import NewsletterAdmin from './pages/admin/NewsletterAdmin'
 export default function App() {
 
   return (
-
+    <>
+    <ScrollToTop />
     <Routes>
-
+ 
       {/* STORE ROUTES */}
 
       <Route
@@ -370,6 +371,7 @@ export default function App() {
 />
 
     </Routes>
+    </>
 
   )
 }
