@@ -7,7 +7,7 @@ export default function Hero() {
 
     {
       type: 'video',
-      src: 'https://res.cloudinary.com/dj3myhk7b/video/upload/v1780230945/13741021_3840_2160_30fps_iul02e.mp4'
+      src: 'https://res.cloudinary.com/dj3myhk7b/video/upload/q_auto/f_auto/v1780230945/13741021_3840_2160_30fps_iul02e.mp4'
     },
 
     {
