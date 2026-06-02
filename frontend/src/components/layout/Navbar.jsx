@@ -29,6 +29,13 @@ export default function Navbar() {
 const [showUserMenu, setShowUserMenu] =
   useState(false)
 
+
+
+
+
+
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
 
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 relative">
@@ -335,11 +342,13 @@ const [showUserMenu, setShowUserMenu] =
 
       <div className="lg:hidden flex items-center justify-between px-4 py-4">
 
-        <button>
-
-          <Menu size={26} />
-
-        </button>
+       <button
+  onClick={() =>
+    setMobileMenuOpen(true)
+  }
+>
+  <Menu size={26} />
+</button>
 
         <Link to="/">
 
@@ -361,60 +370,153 @@ const [showUserMenu, setShowUserMenu] =
 
         </Link>
 
-       <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4">
 
   <Link
     to="/wishlist"
     className="relative"
   >
-
     <Heart size={24} />
 
     {wishlist.length > 0 && (
-
-      <div
-        className="
-          absolute
-          -top-2
-          -right-2
-          bg-black
-          text-white
-          text-[10px]
-          w-5
-          h-5
-          rounded-full
-          flex
-          items-center
-          justify-center
-        "
-      >
-
+      <div className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
         {wishlist.length}
-
       </div>
-
     )}
-
   </Link>
 
   <Link
     to="/cart"
     className="relative"
   >
-
     <ShoppingBag size={24} />
 
     <div className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
-
       {cart.length}
-
     </div>
-
   </Link>
 
 </div>
 
       </div>
+
+
+ {mobileMenuOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40 z-50"
+            onClick={() =>
+              setMobileMenuOpen(false)
+            }
+          />
+
+          <div
+            className="
+              fixed
+              top-0
+              left-0
+              h-full
+              w-72
+              bg-white
+              z-[60]
+              shadow-xl
+              p-6
+            "
+          >
+            <button
+              onClick={() =>
+                setMobileMenuOpen(false)
+              }
+              className="mb-8 text-lg"
+            >
+              ✕
+            </button>
+
+            <div className="flex flex-col gap-5">
+
+              <Link
+                to="/shop"
+                onClick={() =>
+                  setMobileMenuOpen(false)
+                }
+              >
+                Shop
+              </Link>
+
+              <Link
+                to="/collections"
+                onClick={() =>
+                  setMobileMenuOpen(false)
+                }
+              >
+                Collections
+              </Link>
+
+              <Link
+                to="/about"
+                onClick={() =>
+                  setMobileMenuOpen(false)
+                }
+              >
+                About Us
+              </Link>
+
+              <Link
+                to="/contact"
+                onClick={() =>
+                  setMobileMenuOpen(false)
+                }
+              >
+                Contact
+              </Link>
+
+              <hr />
+
+              {!user ? (
+                <Link
+                  to="/login"
+                  onClick={() =>
+                    setMobileMenuOpen(false)
+                  }
+                >
+                  Login
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    to="/account"
+                    onClick={() =>
+                      setMobileMenuOpen(false)
+                    }
+                  >
+                    My Account
+                  </Link>
+
+                  <Link
+                    to="/my-orders"
+                    onClick={() =>
+                      setMobileMenuOpen(false)
+                    }
+                  >
+                    My Orders
+                  </Link>
+
+                  <button
+                    className="text-left"
+                    onClick={() => {
+                      logout()
+                      setMobileMenuOpen(false)
+                    }}
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </>
+      )}
+
 
     </nav>
 
