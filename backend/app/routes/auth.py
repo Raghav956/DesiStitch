@@ -4,7 +4,7 @@ from app.database import SessionLocal
 from app.models.user import User
 from app.schemas.user import UserSignup, UserLogin
 from passlib.context import CryptContext
-
+from app.utils.jwt import create_access_token
 router = APIRouter()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -56,11 +56,28 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     if not valid:
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
+    token = create_access_token({
+
+    "user_id": existing_user.id,
+
+    "email": existing_user.email
+
+    })
+
     return {
-        "message": "Login success",
-        "user": {
-            "id": existing_user.id,
-            "name": existing_user.name,
-            "email": existing_user.email
-        }
+
+    "access_token": token,
+
+    "token_type": "bearer",
+
+    "user": {
+
+        "id": existing_user.id,
+
+        "name": existing_user.name,
+
+        "email": existing_user.email
+
     }
+
+}

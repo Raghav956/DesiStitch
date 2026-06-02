@@ -10,8 +10,6 @@ export default function AdminLayout({
 
     <div className="min-h-screen bg-[#faf8f4] flex">
 
-      {/* SIDEBAR */}
-
       <aside className="w-[280px] bg-white border-r">
 
         <div className="p-8">
@@ -67,11 +65,58 @@ export default function AdminLayout({
             Orders
           </Link>
 
+          <Link
+
+  to="/admin/messages"
+
+  className="block p-4 rounded-2xl hover:bg-gray-100"
+
+>
+
+  Messages
+
+</Link>
+
+<Link
+
+  to="/admin/newsletter"
+
+  className="block p-4 rounded-2xl hover:bg-gray-100"
+
+>
+
+  Newsletter
+
+</Link>
+
         </nav>
 
-      </aside>
+        <div className="mt-10 px-4">
 
-      {/* CONTENT */}
+          <button
+
+            onClick={() => {
+
+              localStorage.removeItem(
+                'admin_token'
+              )
+
+              window.location.href =
+                '/admin/login'
+
+            }}
+
+            className="w-full bg-red-500 text-white py-3 rounded-2xl"
+
+          >
+
+            Logout
+
+          </button>
+
+        </div>
+
+      </aside>
 
       <main className="flex-1 p-10">
 
@@ -82,4 +127,5 @@ export default function AdminLayout({
     </div>
 
   )
+
 }

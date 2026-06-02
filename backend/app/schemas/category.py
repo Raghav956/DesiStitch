@@ -1,5 +1,11 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class CategoryCreate(BaseModel):
-    name: str
-    image_url: str
+
+    name: str = Field(
+        min_length=1
+    )
+
+    image_url: str = Field(
+        min_length=1
+    )

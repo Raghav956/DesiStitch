@@ -78,12 +78,53 @@ export default function CollectionShowcase() {
 
             <div className="overflow-hidden">
 
-              <img
-                src={collection.banner}
-                className="h-[650px] w-full object-cover group-hover:scale-105 transition duration-700"
-              />
+  {collection.banner?.includes('.mp4')
 
-            </div>
+   ||
+
+   collection.banner?.includes('/video/')
+
+    ? (
+
+      <video
+
+        autoPlay
+
+        muted
+
+        loop
+
+        playsInline
+
+        className="h-[650px] w-full object-cover group-hover:scale-105 transition duration-700"
+
+      >
+
+        <source
+
+          src={collection.banner}
+
+          type="video/mp4"
+
+        />
+
+      </video>
+
+    )
+
+    : (
+
+      <img
+
+        src={collection.banner}
+
+        className="h-[650px] w-full object-cover group-hover:scale-105 transition duration-700"
+
+      />
+
+    )}
+
+</div>
 
             {/* OVERLAY */}
 

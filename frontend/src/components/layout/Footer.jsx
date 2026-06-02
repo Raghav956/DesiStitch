@@ -39,7 +39,7 @@ export default function Footer() {
               {/* INSTAGRAM */}
 
               <a
-                href="https://instagram.com/desistitchbyshivika"
+                href="https://www.instagram.com/desi_stitch_by_shivika?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                 target="_blank"
                 rel="noreferrer"
                 className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center hover:bg-black hover:text-white transition"
@@ -52,7 +52,7 @@ export default function Footer() {
               {/* WHATSAPP */}
 
               <a
-                href="https://wa.me/919999999999"
+                href="https://wa.me/919044796939"
                 target="_blank"
                 rel="noreferrer"
                 className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center hover:bg-green-500 hover:text-white transition"
@@ -96,23 +96,19 @@ export default function Footer() {
 
               </Link>
 
-              <Link
-                to="/category/1"
-                className="block hover:text-black transition"
-              >
+          <Link
+  to="/collections/ikkat-collection"
+  className="block hover:text-black transition"
+>
+  Ikkat Collection
+</Link>
 
-                Kurtis
-
-              </Link>
-
-              <Link
-                to="/category/2"
-                className="block hover:text-black transition"
-              >
-
-                Tops
-
-              </Link>
+<Link
+  to="/collections/block-print-collection"
+  className="block hover:text-black transition"
+>
+  Block Print Collection
+</Link>
 
             </div>
 
@@ -122,41 +118,89 @@ export default function Footer() {
 
           <div>
 
-            <h3 className="font-bold text-lg mb-6">
+  <h3 className="font-bold text-lg mb-6">
 
-              Company
+    Company
 
-            </h3>
+  </h3>
 
-            <div className="space-y-4 text-gray-600">
+  <div className="space-y-4 text-gray-600">
 
-              <button className="hover:text-black transition">
+    <Link
 
-                About Us
+      to="/about"
 
-              </button>
+      className="block hover:text-black transition"
 
-              <button className="hover:text-black transition">
+    >
 
-                Contact
+      About Us
 
-              </button>
+    </Link>
 
-              <button className="hover:text-black transition">
+    <Link
 
-                Shipping Policy
+      to="/contact"
 
-              </button>
+      className="block hover:text-black transition"
 
-              <button className="hover:text-black transition">
+    >
 
-                Privacy Policy
+      Contact Us
 
-              </button>
+    </Link>
 
-            </div>
+    <Link
 
-          </div>
+      to="/shipping-policy"
+
+      className="block hover:text-black transition"
+
+    >
+
+      Shipping Policy
+
+    </Link>
+
+    <Link
+
+      to="/privacy-policy"
+
+      className="block hover:text-black transition"
+
+    >
+
+      Privacy Policy
+
+    </Link>
+
+    <Link
+
+      to="/return-policy"
+
+      className="block hover:text-black transition"
+
+    >
+
+      Return Policy
+
+    </Link>
+
+    <Link
+
+      to="/terms-and-conditions"
+
+      className="block hover:text-black transition"
+
+    >
+
+      Terms & Conditions
+
+    </Link>
+
+  </div>
+
+</div>
 
           {/* NEWSLETTER */}
 

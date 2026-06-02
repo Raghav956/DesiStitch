@@ -77,3 +77,63 @@ def get_collection_products(
     return db.query(Product).filter(
         Product.collection_id == collection.id
     ).all()
+
+
+@router.delete("/{id}")
+def delete_collection(
+    id: int,
+    db: Session = Depends(get_db)
+):
+
+    collection = db.query(
+        Collection
+    ).filter(
+        Collection.id == id
+    ).first()
+
+    if not collection:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Not Found"
+        )
+
+    db.delete(collection)
+
+    db.commit()
+
+    return {
+        "message": "Deleted"
+    }
+
+@router.put("/{id}")
+def update_collection(
+
+    id: int,
+
+    collection: CollectionCreate,
+
+    db: Session = Depends(get_db)
+
+):
+
+    existing = db.query(Collection).filter(
+        Collection.id == id
+    ).first()
+
+    if not existing:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Collection not found"
+        )
+
+    existing.title = collection.title
+    existing.slug = collection.slug
+    existing.subtitle = collection.subtitle
+    existing.banner = collection.banner
+
+    db.commit()
+    db.refresh(existing)
+
+    return existing

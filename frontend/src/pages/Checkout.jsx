@@ -4,7 +4,7 @@ import useCartStore from '../store/cartStore'
 import api from '../services/api'
 
 import toast from 'react-hot-toast'
-
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -14,9 +14,15 @@ import toast from 'react-hot-toast'
 
 
 export default function Checkout() {
+const navigate = useNavigate()
 
+  const {
 
-  const { cart } = useCartStore()
+  cart,
+
+  clearCart
+
+} = useCartStore()
 
   const [formData, setFormData] = useState({
 
@@ -93,6 +99,14 @@ export default function Checkout() {
 
  const handlePlaceOrder = async () => {
 
+const user = JSON.parse(
+
+  localStorage.getItem(
+    'desistitch_user'
+  )
+
+)
+
   if (cart.length === 0) {
 
     toast.error(
@@ -120,7 +134,9 @@ export default function Checkout() {
 
   try {
 
-    await api.post('/orders', {
+    const response =await api.post('/orders', {
+
+    user_id: user?.id,
 
       customer_name: formData.name,
 
@@ -142,9 +158,21 @@ export default function Checkout() {
 
     })
 
-    toast.success(
-      'Order placed successfully'
-    )
+   toast.success(
+  'Order placed successfully'
+)
+
+clearCart()
+
+navigate(
+
+  `/order-success/${
+
+    response.data.id
+
+  }`
+
+) 
 
   } catch (error) {
 

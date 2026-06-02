@@ -9,3 +9,7 @@ class User(Base):
     email = Column(String, unique=True)
     password = Column(String)
     is_admin = Column(Boolean, default=False)
+    newsletter_subscribed = Column(
+    Boolean,
+    default=False
+)

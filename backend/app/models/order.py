@@ -3,7 +3,9 @@ from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Numeric
 from sqlalchemy import Text
-
+from sqlalchemy import DateTime
+from sqlalchemy import ForeignKey
+from datetime import datetime
 from app.database import Base
 
 
@@ -35,7 +37,16 @@ class Order(Base):
         String,
         default="Pending"
     )
+    created_at = Column(
+    DateTime,
+    default=datetime.utcnow
+)
 
     total_amount = Column(Numeric)
 
     items = Column(Text)
+    user_id = Column(
+    Integer,
+    ForeignKey("users.id"),
+    nullable=True
+)

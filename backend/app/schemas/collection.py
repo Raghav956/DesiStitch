@@ -1,11 +1,19 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class CollectionCreate(BaseModel):
 
-    title: str
+    title: str = Field(
+        min_length=1
+    )
 
-    slug: str
+    slug: str = Field(
+        min_length=1
+    )
 
-    subtitle: str
+    subtitle: str = Field(
+        min_length=1
+    )
 
-    banner: str
+    banner: str = Field(
+        min_length=1
+    )

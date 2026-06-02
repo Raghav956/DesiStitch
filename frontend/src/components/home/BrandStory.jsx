@@ -12,10 +12,21 @@ export default function BrandStory() {
 
           <div className="overflow-hidden rounded-luxury">
 
-            <img
-              src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b"
-              className="h-[700px] w-full object-cover"
-            />
+            <div className="overflow-hidden rounded-luxury">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    preload="metadata"
+    className="h-[700px] w-full object-cover"
+  >
+    <source
+      src="https://res.cloudinary.com/dj3myhk7b/video/upload/q_auto/f_auto/v1780295724/20168290-hd_1920_1080_25fps_gz79lf.mp4"
+      type="video/mp4"
+    />
+  </video>
+</div>
 
           </div>
 

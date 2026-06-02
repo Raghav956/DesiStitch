@@ -13,6 +13,14 @@ from app.routes import categories
 from app.models.collection import Collection
 from app.routes import collections
 from app.routes import orders
+import app.cloudinary_config
+from app.routes import upload
+from app.models.admin import Admin
+from app.routes import admin_auth
+from app.models.message import Message
+from app.routes import messages
+from app.routes import newsletter
+from app.routes import dashboard
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -32,6 +40,20 @@ app.include_router(
     prefix="/products",
     tags=["Products"]
 )
+app.include_router(
+    admin_auth.router,
+    prefix="/admin",
+    tags=["Admin Auth"]
+)
+app.include_router(
+
+    messages.router,
+
+    prefix="/messages",
+
+    tags=["Messages"]
+
+)
 
 app.include_router(
     categories.router,
@@ -39,16 +61,38 @@ app.include_router(
     tags=["Categories"]
 )
 app.include_router(
+    upload.router,
+    prefix="/upload",
+    tags=["Upload"]
+)
+app.include_router(
     collections.router,
     prefix="/collections",
     tags=["Collections"]
+)
+app.include_router(
+
+    newsletter.router,
+
+    prefix="/newsletter",
+
+    tags=["Newsletter"]
+
 )
 app.include_router(
     orders.router,
     prefix="/orders",
     tags=["Orders"]
 )
+app.include_router(
 
+    dashboard.router,
+
+    prefix="/dashboard",
+
+    tags=["Dashboard"]
+
+)
 
 @app.get("/")
 def home():

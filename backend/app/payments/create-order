@@ -1,0 +1,10 @@
+@router.post("/create-order")
+def create_payment_order(
+    amount: float
+):
+
+    razorpay = RazorpayService()
+
+    return razorpay.create_order(
+        amount
+    )

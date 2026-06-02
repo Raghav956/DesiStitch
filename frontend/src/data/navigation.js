@@ -9,12 +9,33 @@ export const navigation = [
         heading: 'Collections',
 
         links: [
-          'Summer Edit',
-          'Khadi Luxe',
-          'Festive Wear',
-          'New Arrivals',
-          'Best Sellers'
-        ]
+
+  {
+    label: 'Kurtis',
+    path: '/shop'
+  },
+
+  {
+    label: 'Tops',
+    path: '/shop'
+  },
+
+  {
+    label: 'Night Suits',
+    path: '/shop'
+  },
+
+  {
+    label: 'Co-ord Sets',
+    path: '/shop'
+  },
+
+  {
+    label: 'Casual Wear',
+    path: '/shop'
+  }
+
+]
       },
 
       {

@@ -4,58 +4,110 @@ const useCartStore = create((set) => ({
 
   cart: [],
 
-  addToCart: (product) =>
-    set((state) => {
+ addToCart: (product) => {
 
-      const existing = state.cart.find(
-        (item) => item.id === product.id
-      )
+  let added = false
 
-      if (existing) {
+  set((state) => {
 
-        return {
+    const existing = state.cart.find(
+      (item) => item.id === product.id
+    )
 
-          cart: state.cart.map((item) =>
+    if (existing) {
 
-            item.id === product.id
-              ? {
-                  ...item,
-                  quantity: item.quantity + 1
-                }
-              : item
-          )
+      if (
+        existing.quantity >= product.stock
+      ) {
+
+        return state
+      }
+
+      added = true
+
+      return {
+
+        cart: state.cart.map((item) =>
+
+          item.id === product.id
+
+            ? {
+
+                ...item,
+
+                quantity:
+                  item.quantity + 1
+
+              }
+
+            : item
+
+        )
+
+      }
+
+    }
+
+    added = true
+
+    return {
+
+      cart: [
+
+        ...state.cart,
+
+        {
+
+          ...product,
+
+          quantity: 1
 
         }
+
+      ]
+
+    }
+
+  })
+
+  return added
+
+},
+
+ increaseQuantity: (id) =>
+  set((state) => ({
+
+    cart: state.cart.map((item) => {
+
+      if (item.id !== id) {
+
+        return item
+
+      }
+
+      if (
+
+        item.quantity >= item.stock
+
+      ) {
+
+        return item
+
       }
 
       return {
 
-        cart: [
-          ...state.cart,
-          {
-            ...product,
-            quantity: 1
-          }
-        ]
+        ...item,
+
+        quantity:
+
+          item.quantity + 1
 
       }
 
-    }),
+    })
 
-  increaseQuantity: (id) =>
-    set((state) => ({
-
-      cart: state.cart.map((item) =>
-
-        item.id === id
-          ? {
-              ...item,
-              quantity: item.quantity + 1
-            }
-          : item
-      )
-
-    })),
+  })),
 
   decreaseQuantity: (id) =>
     set((state) => ({
@@ -73,6 +125,13 @@ const useCartStore = create((set) => ({
         .filter((item) => item.quantity > 0)
 
     })),
+    clearCart: () =>
+
+  set({
+
+    cart: []
+
+  }),
 
   removeFromCart: (id) =>
     set((state) => ({

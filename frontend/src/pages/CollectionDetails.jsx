@@ -86,7 +86,7 @@ export default function CollectionDetails() {
       <CollectionGrid
         products={products}
       />
-  console.log("Collection:", collection)
+  
     </div>
   
   )

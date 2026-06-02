@@ -3,14 +3,32 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 
 import useCartStore from '../../store/cartStore'
+import { Heart } from 'lucide-react'
 
+import useWishlistStore from '../../store/wishlistStore'
 export default function ProductInfo({
 
   product
 
 }) {
 
+
+
   const { addToCart } = useCartStore()
+
+  const {
+
+  addToWishlist,
+
+  removeFromWishlist,
+
+  isInWishlist
+
+} = useWishlistStore()
+
+const wished = isInWishlist(
+  product.id
+)
 
   const [size, setSize] = useState('M')
 
@@ -18,13 +36,29 @@ export default function ProductInfo({
 
   const handleAddToCart = () => {
 
-    addToCart({
-      ...product,
-      selectedSize: size
-    })
+  const added = addToCart({
 
-    toast.success('Added to cart')
+    ...product,
+
+    selectedSize: size
+
+  })
+
+  if (added) {
+
+    toast.success(
+      'Added to cart'
+    )
+
+  } else {
+
+    toast.error(
+      'Maximum stock reached'
+    )
+
   }
+
+}
 
   return (
 
@@ -46,6 +80,16 @@ export default function ProductInfo({
 
         ₹{product.price}
       </p>
+
+      <p className="mt-2 text-sm text-gray-500">
+
+  {product.stock > 0
+
+    ? `${product.stock} pieces available`
+
+    : 'Out of stock'}
+
+</p>
 
       <p className="text-gray-600 mt-6 leading-relaxed">
 
@@ -86,16 +130,101 @@ export default function ProductInfo({
 
       </div>
 
+      <button
+
+  onClick={() => {
+
+    if (wished) {
+
+      removeFromWishlist(
+        product.id
+      )
+
+      toast.success(
+        'Removed from wishlist'
+      )
+
+    } else {
+
+      addToWishlist(
+        product
+      )
+
+      toast.success(
+        'Added to wishlist'
+      )
+
+    }
+
+  }}
+
+  className="
+    w-full
+    mt-10
+    border
+    py-4
+    rounded-full
+    text-lg
+    font-semibold
+    flex
+    items-center
+    justify-center
+    gap-2
+  "
+
+>
+
+  <Heart
+
+    size={20}
+
+    fill={
+      wished
+        ? 'currentColor'
+        : 'none'
+    }
+
+  />
+
+  {wished
+
+    ? 'Remove From Wishlist'
+
+    : 'Add To Wishlist'}
+
+</button>
+
       {/* ADD TO CART */}
 
-      <button
-        onClick={handleAddToCart}
-        className="w-full mt-10 bg-black text-white py-4 rounded-full text-lg font-semibold hover:scale-[1.02] transition"
-      >
+      {product.stock > 0 ? (
 
-        Add To Cart
+  <button
 
-      </button>
+    onClick={handleAddToCart}
+
+    className="w-full mt-4 bg-black text-white py-4 rounded-full text-lg font-semibold hover:scale-[1.02] transition"
+
+  >
+
+    Add To Cart
+
+  </button>
+
+) : (
+
+  <button
+
+    disabled
+
+    className="w-full mt-4 bg-gray-400 text-white py-4 rounded-full text-lg font-semibold cursor-not-allowed"
+
+  >
+
+    Out Of Stock
+
+  </button>
+
+)}
 
     </div>
 

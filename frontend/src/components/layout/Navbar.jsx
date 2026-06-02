@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Link } from 'react-router-dom'
-
+import useWishlistStore from '../../store/wishlistStore'
 import {
   Search,
   ShoppingBag,
@@ -15,12 +15,19 @@ import MegaMenu from './MegaMenu'
 import { navigation } from '../../data/navigation'
 
 import useCartStore from '../../store/cartStore'
+import useAuthStore from '../../store/authStore'
 
 export default function Navbar() {
-
+  const { wishlist } =
+  useWishlistStore()
   const [activeMenu, setActiveMenu] = useState(null)
 
   const { cart } = useCartStore()
+
+  const { user, logout } = useAuthStore()
+
+const [showUserMenu, setShowUserMenu] =
+  useState(false)
 
   return (
 
@@ -105,28 +112,187 @@ export default function Navbar() {
 
           </div>
 
-          <button>
+         
 
-            <User
-              size={22}
-              strokeWidth={1.7}
-            />
+         <div className="relative">
 
-          </button>
+  {!user ? (
 
-          <button>
+    <Link
+      to="/login"
+      className="hover:text-mustard transition"
+    >
 
-            <Heart
-              size={22}
-              strokeWidth={1.7}
-            />
+      <User
+        size={22}
+        strokeWidth={1.7}
+      />
 
-          </button>
+    </Link>
 
-          <Link
-            to="/cart"
-            className="relative"
-          >
+  ) : (
+
+    <button
+
+      onClick={() =>
+        setShowUserMenu(
+          !showUserMenu
+        )
+      }
+
+      className="flex items-center gap-2"
+
+    >
+
+      <User
+        size={22}
+        strokeWidth={1.7}
+      />
+
+      <span className="text-sm font-medium">
+
+        {user.name}
+
+      </span>
+
+    </button>
+
+  )}
+
+  {user && showUserMenu && (
+
+    <div
+      className="
+        absolute
+        right-0
+        top-full
+        mt-3
+        w-56
+        bg-white
+        rounded-2xl
+        shadow-xl
+        border
+        p-2
+        z-50
+      "
+    >
+
+      <Link
+
+        to="/account"
+
+        onClick={() =>
+          setShowUserMenu(false)
+        }
+
+        className="
+          block
+          px-4
+          py-3
+          rounded-xl
+          hover:bg-gray-100
+        "
+
+      >
+
+        My Account
+
+      </Link>
+
+      <Link
+
+        to="/my-orders"
+
+        onClick={() =>
+          setShowUserMenu(false)
+        }
+
+        className="
+          block
+          px-4
+          py-3
+          rounded-xl
+          hover:bg-gray-100
+        "
+
+      >
+
+        My Orders
+
+      </Link>
+
+      <button
+
+        onClick={() => {
+
+          logout()
+
+          setShowUserMenu(false)
+
+        }}
+
+        className="
+          w-full
+          text-left
+          px-4
+          py-3
+          rounded-xl
+          hover:bg-gray-100
+        "
+
+      >
+
+        Logout
+
+      </button>
+
+    </div>
+
+  )}
+
+</div>
+
+<Link
+  to="/wishlist"
+  className="relative"
+>
+
+  <Heart
+    size={22}
+    strokeWidth={1.7}
+  />
+
+  {wishlist.length > 0 && (
+
+    <div
+      className="
+        absolute
+        -top-2
+        -right-2
+        bg-black
+        text-white
+        text-[10px]
+        w-5
+        h-5
+        rounded-full
+        flex
+        items-center
+        justify-center
+      "
+    >
+
+      {wishlist.length}
+
+    </div>
+
+  )}
+
+</Link>
+
+<Link
+  to="/cart"
+  className="relative"
+>
 
             <ShoppingBag
               size={22}
@@ -195,20 +361,58 @@ export default function Navbar() {
 
         </Link>
 
-        <Link
-          to="/cart"
-          className="relative"
-        >
+       <div className="flex items-center gap-4">
 
-          <ShoppingBag size={24} />
+  <Link
+    to="/wishlist"
+    className="relative"
+  >
 
-          <div className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+    <Heart size={24} />
 
-            {cart.length}
+    {wishlist.length > 0 && (
 
-          </div>
+      <div
+        className="
+          absolute
+          -top-2
+          -right-2
+          bg-black
+          text-white
+          text-[10px]
+          w-5
+          h-5
+          rounded-full
+          flex
+          items-center
+          justify-center
+        "
+      >
 
-        </Link>
+        {wishlist.length}
+
+      </div>
+
+    )}
+
+  </Link>
+
+  <Link
+    to="/cart"
+    className="relative"
+  >
+
+    <ShoppingBag size={24} />
+
+    <div className="absolute -top-2 -right-2 bg-black text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+
+      {cart.length}
+
+    </div>
+
+  </Link>
+
+</div>
 
       </div>
 
